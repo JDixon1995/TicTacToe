@@ -2,12 +2,19 @@
 const X_CLASS = 'x';
 const O_CLASS = 'o';
 const cellElements = document.querySelectorAll('[data-cell]');
-
+const board = document.getElementById('board');
 let oTurn;
 
-cellElements.forEach(cell => {
-    cell.addEventListener('click', handleClick, {once: true})
+startGame();
+
+function startGame() {
+    oTurn = false;
+    cellElements.forEach(cell => {
+        cell.addEventListener('click', handleClick, {once: true})
 });
+    setBoardHoverClass();
+}
+
 
 function handleClick(e) {
     const cell = e.target;
@@ -20,6 +27,7 @@ function handleClick(e) {
 
     //Switch Turns
     swapTurn();
+    setBoardHoverClass();
 }
 
 function placeMark(cell, currentClass) {
@@ -28,4 +36,14 @@ function placeMark(cell, currentClass) {
 
 function swapTurn() {
     oTurn = !oTurn;
+}
+
+function setBoardHoverClass() {
+    board.classList.remove(X_CLASS);
+    board.classList.remove(O_CLASS);
+    if (oTurn) {
+        board.classList.add(O_CLASS);
+    } else {
+        board.classList.add(X_CLASS);
+    }
 }
