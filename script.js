@@ -2,6 +2,16 @@
 const X_CLASS = 'x';
 const O_CLASS = 'o';
 const cellElements = document.querySelectorAll('[data-cell]');
+const WINNING_COMBINATIONS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+]
 const board = document.getElementById('board');
 let oTurn;
 
@@ -22,7 +32,9 @@ function handleClick(e) {
     placeMark(cell, currentClass);
 
     //Check for Win
-
+    if(checkBoardWin(currentClass)) {
+        console.log('winner');
+    };
     //Check for Draw
 
     //Switch Turns
@@ -46,4 +58,12 @@ function setBoardHoverClass() {
     } else {
         board.classList.add(X_CLASS);
     }
+}
+
+function checkBoardWin(currentClass) {
+    return WINNING_COMBINATIONS.some(combination => {
+        return combination.every(index => {
+            return cellElements[index].classList.contains(currentClass);
+        })
+    })
 }
