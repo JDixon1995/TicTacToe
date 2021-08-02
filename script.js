@@ -13,6 +13,9 @@ const WINNING_COMBINATIONS = [
     [2, 4, 6]
 ]
 const board = document.getElementById('board');
+const winningMessageElement = document.getElementById('winningMessage');
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]');
+document.querySelector('[data-winning-message-text]');
 let oTurn;
 
 startGame();
@@ -33,13 +36,29 @@ function handleClick(e) {
 
     //Check for Win
     if(checkBoardWin(currentClass)) {
-        console.log('winner');
+        endGame(false);
+    } else if (isDraw()) {
+        endGame(true);
+    } else {
+        swapTurn();
+        setBoardHoverClass();
     };
-    //Check for Draw
+};
 
-    //Switch Turns
-    swapTurn();
-    setBoardHoverClass();
+function endGame(draw) {
+    if (draw) {
+        winningMessageTextElement.innerText = "Draw.";
+    } else {
+        winningMessageTextElement.innerText = `${oTurn ? "O " : "X " } Wins!`;
+    }
+    winningMessageElement.classList.add("show");
+}
+
+function isDraw() {
+    return [...cellElements].every(cell => {
+        return cell.classList.contains(X_CLASS) ||
+            cell.classList.contains(O_CLASS)
+    })
 }
 
 function placeMark(cell, currentClass) {
