@@ -16,6 +16,7 @@ const board = document.getElementById('board');
 const winningMessageElement = document.getElementById('winningMessage');
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]');
 document.querySelector('[data-winning-message-text]');
+const restartButton = document.getElementById('restartButton');
 let oTurn;
 
 startGame();
@@ -86,3 +87,7 @@ function checkBoardWin(currentClass) {
         })
     })
 }
+
+restartButton.addEventListener('click', function() {
+    location.reload();
+})
